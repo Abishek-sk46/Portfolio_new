@@ -47,13 +47,15 @@ const IconWrapper = styled(motion.div)`
 `;
 
 const SocialIcons = (props) => {
+  const isReturning = sessionStorage.getItem('portfolioEntered') === 'true';
+
   return (
     <Icons>
       <IconWrapper
         $theme={props.theme}
-        initial={{scale:0 }}
-        animate={{ scale: [0, 1, 1.5, 1] }}
-        transition={{ type: "spring", duration: 1, delay: 1 }}
+        initial={{scale: isReturning ? 1 : 0 }}
+        animate={{ scale: isReturning ? 1 : [0, 1, 1.5, 1] }}
+        transition={{ type: "spring", duration: 1, delay: isReturning ? 0 : 1 }}
         whileHover={{ scale: 1.15 }}
         whileTap={{ scale: 0.9 }}
       >
@@ -67,9 +69,9 @@ const SocialIcons = (props) => {
       </IconWrapper>
       <IconWrapper
         $theme={props.theme}
-        initial={{scale:0 }}
-        animate={{ scale: [0, 1, 1.5, 1] }}
-        transition={{ type: "spring", duration: 1, delay: 1.2 }}
+        initial={{scale: isReturning ? 1 : 0 }}
+        animate={{ scale: isReturning ? 1 : [0, 1, 1.5, 1] }}
+        transition={{ type: "spring", duration: 1, delay: isReturning ? 0 : 1.2 }}
         whileHover={{ scale: 1.15 }}
         whileTap={{ scale: 0.9 }}
       >
@@ -83,9 +85,9 @@ const SocialIcons = (props) => {
       </IconWrapper>
       <IconWrapper
         $theme={props.theme}
-        initial={{scale:0 }}
-        animate={{ scale: [0, 1, 1.5, 1] }}
-        transition={{ type: "spring", duration: 1, delay: 1.4 }}
+        initial={{scale: isReturning ? 1 : 0 }}
+        animate={{ scale: isReturning ? 1 : [0, 1, 1.5, 1] }}
+        transition={{ type: "spring", duration: 1, delay: isReturning ? 0 : 1.4 }}
         whileHover={{ scale: 1.15 }}
         whileTap={{ scale: 0.9 }}
       >
@@ -101,7 +103,7 @@ const SocialIcons = (props) => {
       <Line
         $color={props.theme}
         initial={{
-          height: 0,
+          height: isReturning ? "8rem" : 0,
         }}
         animate={{
           height: "8rem",
@@ -109,7 +111,7 @@ const SocialIcons = (props) => {
         transition={{
           type: "spring",
           duration: 1,
-          delay: 0.8,
+          delay: isReturning ? 0 : 0.8,
         }}
       />
     </Icons>

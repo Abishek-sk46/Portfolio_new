@@ -142,35 +142,37 @@ const ContactButton = styled(motion(NavLink))`
 `;
 
 const Intro = () => {
+    const isReturning = sessionStorage.getItem('portfolioEntered') === 'true';
+
     return (
         <Box
-        initial={{height:0}}
+        initial={{height: isReturning ? '55vh' : 0}}
         animate={{height: '55vh'}}
-        transition={{ type: 'spring', duration:2, delay:1 }}
+        transition={{ type: 'spring', duration:2, delay: isReturning ? 0 : 1 }}
         >
             <SubBox>
                 <ManifestoContainer>
                     <ManifestoTitle
-                        initial={{ opacity: 0, x: -20 }}
+                        initial={{ opacity: isReturning ? 1 : 0, x: isReturning ? 0 : -20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 1, delay: 1.5 }}
+                        transition={{ duration: 1, delay: isReturning ? 0 : 1.5 }}
                     >
                         Build with intention.<br/>
                         Learn through creating.
                     </ManifestoTitle>
                     <ManifestoSubText
-                        initial={{ opacity: 0, x: -20 }}
+                        initial={{ opacity: isReturning ? 1 : 0, x: isReturning ? 0 : -20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 1, delay: 1.8 }}
+                        transition={{ duration: 1, delay: isReturning ? 0 : 1.8 }}
                     >
                         Exploring frontend systems,<br/>
                         interactive experiences,<br/>
                         and AI-powered workflows.
                     </ManifestoSubText>
                     <StatusLine
-                        initial={{ opacity: 0 }}
+                        initial={{ opacity: isReturning ? 1 : 0 }}
                         animate={{ opacity: 1 }}
-                        transition={{ duration: 1, delay: 2.5 }}
+                        transition={{ duration: 1, delay: isReturning ? 0 : 2.5 }}
                     >
                         &gt; currently building &amp; learning
                     </StatusLine>
@@ -179,9 +181,9 @@ const Intro = () => {
             </SubBox>
             <SubBox>
                 <motion.div
-                initial={{opacity:0}}
+                initial={{opacity: isReturning ? 1 : 0}}
                 animate={{opacity: 1}}
-                transition={{ duration:1, delay:2 }}
+                transition={{ duration:1, delay: isReturning ? 0 : 2 }}
                 style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                 >
                     <FloatingWorkspace />
