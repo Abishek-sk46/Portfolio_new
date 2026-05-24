@@ -5,12 +5,11 @@ import { motion } from 'motion/react';
 import LogoComponent from '../subComponents/LogoComponent';
 import SocialIcons from '../subComponents/SocialIcons';
 
-const Box = styled.div`
+const Section = styled.section`
   background-color: ${props => props.theme.body};
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height: 100vh;
   position: relative;
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -295,9 +294,7 @@ const ContactPage = () => {
 
   return (
     <ThemeProvider theme={DarkTheme}>
-      <Box>
-        <LogoComponent theme='dark'/>
-        <SocialIcons theme='dark'/>
+      <Section id="contact">
 
         <Container>
           {/* Left Window - JSON */}
@@ -391,7 +388,7 @@ const ContactPage = () => {
             </FormArea>
           </TerminalWindow>
         </Container>
-      </Box>
+      </Section>
     </ThemeProvider>
   );
 };

@@ -6,7 +6,6 @@ import { Github } from '../components/AllSvgs';
 const CardContainer = styled(motion.li)`
   width: 25rem;
   height: 60vh;
-  margin-right: 6rem;
   display: flex;
   flex-direction: column;
   position: relative;

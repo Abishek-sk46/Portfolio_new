@@ -27,7 +27,7 @@ const dotPulse = keyframes`
 `;
 
 // ─── Layout ───
-const PageContainer = styled(motion.div)`
+const Section = styled(motion.section)`
   background-color: ${props => props.theme.body};
   width: 100%;
   min-height: 100vh;
@@ -549,18 +549,23 @@ const ExperienceEntry = ({ experience, index }) => {
 
 // ─── Page Component ───
 const ExperiencePage = () => {
-  const { scrollYProgress } = useScroll();
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"]
+  });
   const beamHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
     <ThemeProvider theme={DarkTheme}>
-      <PageContainer
+      <Section
+        id="experience"
+        ref={ref}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, transition: { duration: 0.8 } }}
         exit={{ opacity: 0, transition: { duration: 0.6 } }}
       >
-        <LogoComponent theme="dark" />
-        <SocialIcons theme="dark" />
+
 
         <ContentWrapper>
           <HeaderSection
@@ -594,7 +599,7 @@ const ExperiencePage = () => {
             ))}
           </TimelineContainer>
         </ContentWrapper>
-      </PageContainer>
+      </Section>
     </ThemeProvider>
   );
 };

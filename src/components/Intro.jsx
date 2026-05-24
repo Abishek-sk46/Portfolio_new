@@ -25,18 +25,10 @@ const Box = styled(motion.div)`
   height: 55vh;
   display: flex;
 
-  background: linear-gradient(
-    to right,
-    ${props => props.theme.body} 50%,
-    ${props => props.theme.text} 50%) bottom,
-    linear-gradient(
-    to right,
-    ${props => props.theme.body} 50%,
-    ${props => props.theme.text} 50%) top;
-  background-repeat: no-repeat;
-  background-size: 100% 2px;
-  border-left: 2px solid ${props => props.theme.body};
-  border-right: 2px solid ${props => props.theme.text};
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  background: rgba(15, 15, 15, 0.2);
+  backdrop-filter: blur(10px);
   z-index: 1;
 `;
 
@@ -52,7 +44,7 @@ const ManifestoContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  color: ${props => props.theme.body};
+  color: ${props => props.theme.text};
   height: 100%;
   gap: 1.5rem;
   width: 100%;
@@ -72,7 +64,7 @@ const ManifestoSubText = styled(motion.p)`
   font-size: calc(0.85rem + 0.4vw);
   line-height: 1.6;
   font-weight: 400;
-  color: ${props => `rgba(${props.theme.bodyRgba}, 0.75)`};
+  color: ${props => `rgba(${props.theme.textRgba}, 0.75)`};
   margin: 0;
   max-width: 90%;
 `;
@@ -80,7 +72,7 @@ const ManifestoSubText = styled(motion.p)`
 const StatusLine = styled(motion.div)`
   font-family: 'Fira Code', monospace, Consolas, "Courier New";
   font-size: calc(0.65rem + 0.3vw);
-  color: ${props => `rgba(${props.theme.bodyRgba}, 0.5)`};
+  color: ${props => `rgba(${props.theme.textRgba}, 0.5)`};
   display: flex;
   align-items: center;
   margin-top: 1rem;

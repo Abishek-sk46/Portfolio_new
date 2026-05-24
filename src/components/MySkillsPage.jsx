@@ -8,12 +8,11 @@ import SocialIcons from '../subComponents/SocialIcons';
 import { TechStackData } from '../data/TechData';
 
 // Styled Components
-const Box = styled.div`
+const Section = styled.section`
   background-color: ${props => props.theme.body};
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height: 100vh;
   position: relative;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -233,9 +232,7 @@ const TechNode = ({ data, index }) => {
 const MySkillsPage = () => {
   return (
     <ThemeProvider theme={DarkTheme}>
-      <Box>
-        <LogoComponent theme='dark'/>
-        <SocialIcons theme='dark'/>
+      <Section id="skills">
 
         <TitleContainer
           initial={{ opacity: 0, y: -30 }}
@@ -252,7 +249,7 @@ const MySkillsPage = () => {
           ))}
         </EcosystemContainer>
 
-      </Box>
+      </Section>
     </ThemeProvider>
   );
 };

@@ -6,12 +6,7 @@ import GlobalStyle from "./globalStyles";
 
 //Components
 import Main from "./components/Main";
-import AboutPage from "./components/AboutPage";
-import ExperiencePage from "./components/ExperiencePage";
-import WorkPage from "./components/WorkPage";
-import MySkillsPage from "./components/MySkillsPage";
-import ContactPage from "./components/ContactPage";
-// import SoundBar from "./subComponents/SoundBar";
+import PortfolioScroll from "./components/PortfolioScroll";
 
 function App() {
   const location = useLocation();
@@ -25,11 +20,7 @@ function App() {
         <AnimatePresence mode="wait">
           <Routes key={location.pathname} location={location}>
             <Route path="/" element={<Main />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/experience" element={<ExperiencePage />} />
-            <Route path="/work" element={<WorkPage />} />
-            <Route path="/skills" element={<MySkillsPage />} />
-            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/portfolio" element={<PortfolioScroll />} />
             {/* Catch-all: send unknown routes to Main */}
             <Route path="*" element={<Main />} />
           </Routes>

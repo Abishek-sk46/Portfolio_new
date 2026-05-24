@@ -7,12 +7,11 @@ import LogoComponent from '../subComponents/LogoComponent';
 import SocialIcons from '../subComponents/SocialIcons';
 import BigTitle from '../subComponents/BigTitlte'
 
-const Box = styled.div`
+const Section = styled.section`
   background-color: ${props => props.theme.body};
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height: 100vh;
   position: relative;
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -323,9 +322,7 @@ const itemVariants = {
 const AboutPage = () => {
     return (
         <ThemeProvider theme={DarkTheme}>
-          <Box>
-            <LogoComponent theme='dark'/>
-            <SocialIcons theme='dark'/>
+          <Section id="about">
 
             <LayoutWrapper variants={containerVariants} initial="hidden" animate="show">
               
@@ -390,7 +387,7 @@ const AboutPage = () => {
 
             </LayoutWrapper>
 
-          </Box>
+          </Section>
         </ThemeProvider>
     )
 }
