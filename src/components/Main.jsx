@@ -1,8 +1,10 @@
 import { motion } from 'motion/react'
 import { useState, useEffect } from 'react'
+import { FiDownload } from 'react-icons/fi'
 import { NavLink } from 'react-router-dom'
 import styled, { keyframes } from 'styled-components'
 import LogoComponent from '../subComponents/LogoComponent'
+import PortfolioAssistant from '../subComponents/PortfolioAssistant'
 // import PowerButton from '../subComponents/PowerButton'
 import SocialIcons from '../subComponents/SocialIcons'
 
@@ -28,13 +30,55 @@ const Container = styled.div`
 padding: 2rem;
 `
 
+const TopRightControls = styled.div`
+  position: absolute;
+  top: 2rem;
+  right: calc(1rem + 2vw);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  z-index: 1;
+`
+
+const ResumeBtn = styled(motion.a)`
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: ${props => props.theme.text};
+  text-decoration: none;
+  font-family: 'Karla', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  
+  background: ${props => `linear-gradient(135deg, rgba(${props.theme.textRgba}, 0.05) 0%, rgba(${props.theme.textRgba}, 0.15) 100%)`};
+  backdrop-filter: blur(8px);
+  border: 1px solid ${props => `rgba(${props.theme.textRgba}, 0.3)`};
+  padding: 0.5rem 1.5rem;
+  border-radius: 30px;
+  box-shadow: 0 4px 15px ${props => `rgba(${props.theme.bodyRgba}, 0.2)`};
+  
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  
+  .icon {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+  }
+  
+  &:hover {
+    background: ${props => `linear-gradient(135deg, rgba(${props.theme.textRgba}, 0.1) 0%, rgba(${props.theme.textRgba}, 0.25) 100%)`};
+    border: 1px solid ${props => `rgba(${props.theme.textRgba}, 0.5)`};
+    box-shadow: 0 8px 25px ${props => `rgba(${props.theme.textRgba}, 0.3)`}, inset 0 0 10px ${props => `rgba(${props.theme.textRgba}, 0.1)`};
+    
+    .icon {
+      transform: translateY(2px);
+    }
+  }
+`
+
 const Contact = styled(NavLink)`
 color: ${props => props.theme.text};
-position: absolute;
-top: 2rem;
-right: calc(1rem + 2vw);
 text-decoration: none;
-z-index:1;
 `
 const BLOG = styled(NavLink)`
 color: ${props => props.theme.text};
@@ -88,11 +132,6 @@ const floatAnimation = keyframes`
   50% { transform: translate(-50%, -50%) translateY(-10px); }
 `;
 
-const floatAnimationClick = keyframes`
-  0%, 100% { transform: translate(-50%, -50%) scale(0.4) translateY(0); }
-  50% { transform: translate(-50%, -50%) scale(0.4) translateY(-10px); }
-`;
-
 const pulseGlow = keyframes`
   0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
   50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.05); }
@@ -132,9 +171,9 @@ const AmbientGlow = styled.div`
 
 const TerminalCard = styled.div`
   position: absolute;
-  top: ${props => props.$click ? '85%' : '50%'};
-  left: ${props => props.$click ? '92%' : '50%'};
-  animation: ${props => props.$click ? floatAnimationClick : floatAnimation} 6s infinite ease-in-out;
+  top: 50%;
+  left: 50%;
+  animation: ${floatAnimation} 6s infinite ease-in-out;
   
   background: rgba(15, 15, 15, 0.75);
   backdrop-filter: blur(20px);
@@ -148,11 +187,12 @@ const TerminalCard = styled.div`
   max-width: 90vw;
   min-height: 280px;
   z-index: 2;
-  transition: all 1s cubic-bezier(0.86, 0, 0.07, 1);
+  transition: opacity 0.8s ease;
+  opacity: ${props => props.$click ? 0 : 1};
+  pointer-events: ${props => props.$click ? 'none' : 'auto'};
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  cursor: ${props => props.$click ? 'pointer' : 'default'};
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 
   &::after {
@@ -166,30 +206,15 @@ const TerminalCard = styled.div`
   }
 
   &:hover {
-     border: 1px solid rgba(255, 255, 255, ${props => props.$click ? '0.3' : '0.2'});
+     border: 1px solid rgba(255, 255, 255, 0.2);
      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
   }
 
   .content {
-    opacity: ${props => props.$click ? 0 : 1};
-    transition: opacity 0.5s ease;
     display: flex;
     flex-direction: column;
     flex: 1;
-    pointer-events: ${props => props.$click ? 'none' : 'auto'};
     z-index: 1; 
-  }
-
-  .minimized {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: ${props => props.$click ? 1 : 0};
-    transition: opacity 0.5s ease 0.5s;
-    pointer-events: ${props => props.$click ? 'auto' : 'none'};
-    z-index: 10;
   }
   
   .line {
@@ -287,85 +312,7 @@ const MouseIcon = styled.svg`
   pointer-events: none;
 `;
 
-const morph = keyframes`
-  0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-  50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
-  100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-`;
 
-const rotate = keyframes`
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-`;
-
-const InteractionZone = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  
-  .label {
-    position: absolute;
-    top: 30px;
-    font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.4);
-    letter-spacing: 0.15em;
-    font-family: 'Fira Code', monospace;
-    text-align: center;
-    text-transform: uppercase;
-    transition: all 0.4s ease;
-  }
-
-  .orb-container {
-    position: relative;
-    width: 140px;
-    height: 140px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-    cursor: crosshair;
-    
-    &:hover .orb1 {
-      background: linear-gradient(120deg, #ff0844 0%, #ffb199 100%);
-      box-shadow: 0 0 50px rgba(255, 8, 68, 0.6);
-      transform: scale(1.15) rotate(45deg);
-    }
-    
-    &:hover .orb2 {
-      background: linear-gradient(120deg, #4facfe 0%, #00f2fe 100%);
-      transform: scale(1.15) rotate(-45deg);
-    }
-    
-    &:hover ~ .label {
-      color: rgba(255, 255, 255, 0.9);
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    }
-  }
-
-  .orb1, .orb2 {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    mix-blend-mode: screen;
-    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-
-  .orb1 {
-    background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
-    animation: ${morph} 8s ease-in-out infinite, ${rotate} 20s linear infinite;
-    box-shadow: 0 0 30px rgba(132, 250, 176, 0.3);
-  }
-
-  .orb2 {
-    background: linear-gradient(120deg, #a18cd1 0%, #fbc2eb 100%);
-    animation: ${morph} 10s ease-in-out infinite reverse, ${rotate} 25s linear infinite reverse;
-    opacity: 0.8;
-  }
-`;
 
 const terminalLines = [
   "Hi, I'm Abishek.",
@@ -459,15 +406,6 @@ const TypewriterTerminal = ({ click, onClick }) => {
           </ActionWrapper>
         )}
       </div>
-      <div className="minimized">
-        <InteractionZone>
-           <div className="orb-container">
-               <div className="orb1"></div>
-               <div className="orb2"></div>
-           </div>
-           <div className="label">Interaction Zone</div>
-        </InteractionZone>
-      </div>
     </TerminalCard>
     </>
   );
@@ -488,9 +426,18 @@ transition: height 0.5s ease, width 1s ease 0.5s;
 
 const Main = () => {
 
-    const [click, setClick] = useState(false);
+    const isReturningSession = sessionStorage.getItem('portfolioEntered') === 'true';
 
-    const handleClick = () => setClick(!click);
+    const [click, setClick] = useState(isReturningSession);
+
+    const handleClick = () => {
+        setClick(!click);
+        if (!click) {
+            sessionStorage.setItem('portfolioEntered', 'true');
+        } else {
+            sessionStorage.removeItem('portfolioEntered');
+        }
+    };
 
     return (
         <MainContainer>
@@ -502,27 +449,46 @@ const Main = () => {
 
                 <TypewriterTerminal click={click} onClick={handleClick} />
 
-                <Contact to="/contact">
-                    <motion.h2
+                <TopRightControls>
+                    <ResumeBtn
+                        href="/resume.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         initial={{
-                            y: -200,
+                            y: isReturningSession ? 0 : -200,
                             transition: { type: 'spring', duration: 1.5, delay: 1 }
                         }}
                         animate={{
                             y: 0,
                             transition: { type: 'spring', duration: 1.5, delay: 1 }
                         }}
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                     >
-                        Say hi..
-                    </motion.h2>
-                </Contact>
+                        <FiDownload className="icon" /> Resume
+                    </ResumeBtn>
+                    <Contact to="/contact">
+                        <motion.h2
+                            initial={{
+                                y: isReturningSession ? 0 : -200,
+                                transition: { type: 'spring', duration: 1.5, delay: 1 }
+                            }}
+                            animate={{
+                                y: 0,
+                                transition: { type: 'spring', duration: 1.5, delay: 1 }
+                            }}
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+
+                        >
+                            Say hi..
+                        </motion.h2>
+                    </Contact>
+                </TopRightControls>
                 <BLOG to="/experience">
                     <motion.h2
                         initial={{
-                            y: -200,
+                            y: isReturningSession ? 0 : -200,
                             transition: { type: 'spring', duration: 1.5, delay: 1 }
                         }}
                         animate={{
@@ -538,7 +504,7 @@ const Main = () => {
                 <WORK to="/work" $click={click}>
                     <motion.h2
                         initial={{
-                            y: -200,
+                            y: isReturningSession ? 0 : -200,
                             transition: { type: 'spring', duration: 1.5, delay: 1 }
                         }}
                         animate={{
@@ -555,7 +521,7 @@ const Main = () => {
                     <ABOUT to="/about" $click={click}>
                         <motion.h2
                             initial={{
-                                y: 200,
+                                y: isReturningSession ? 0 : 200,
                                 transition: { type: 'spring', duration: 1.5, delay: 1 }
                             }}
                             animate={{
@@ -571,7 +537,7 @@ const Main = () => {
                     <SKILLS to="/skills">
                         <motion.h2
                             initial={{
-                                y: 200,
+                                y: isReturningSession ? 0 : 200,
                                 transition: { type: 'spring', duration: 1.5, delay: 1 }
                             }}
                             animate={{
@@ -589,6 +555,7 @@ const Main = () => {
 
             </Container>
             {click ? <Intro click={click} /> : null}
+            <PortfolioAssistant />
         </MainContainer>
     )
 }
