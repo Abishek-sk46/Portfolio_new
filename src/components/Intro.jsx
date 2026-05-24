@@ -141,8 +141,7 @@ const ContactButton = styled(motion(NavLink))`
   }
 `;
 
-const Intro = () => {
-    const isReturning = sessionStorage.getItem('portfolioEntered') === 'true';
+const Intro = ({ isReturning }) => {
 
     return (
         <Box

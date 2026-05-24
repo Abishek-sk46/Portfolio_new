@@ -426,7 +426,7 @@ transition: height 0.5s ease, width 1s ease 0.5s;
 
 const Main = () => {
 
-    const isReturningSession = sessionStorage.getItem('portfolioEntered') === 'true';
+    const [isReturningSession] = useState(() => sessionStorage.getItem('portfolioEntered') === 'true');
 
     const [click, setClick] = useState(isReturningSession);
 
@@ -554,7 +554,7 @@ const Main = () => {
                 </BottomBar>
 
             </Container>
-            {click ? <Intro click={click} /> : null}
+            {click ? <Intro click={click} isReturning={isReturningSession} /> : null}
             <PortfolioAssistant />
         </MainContainer>
     )
