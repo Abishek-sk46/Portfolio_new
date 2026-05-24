@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { lightTheme } from "./components/Themes";
@@ -15,6 +16,32 @@ import ContactPage from "./components/ContactPage";
 
 function App() {
   const location = useLocation();
+
+  useEffect(() => {
+    switch (location.pathname) {
+      case "/":
+        document.title = "Abishek — Full Stack Engineer";
+        break;
+      case "/about":
+        document.title = "About — Abishek";
+        break;
+      case "/work":
+        document.title = "Projects — Abishek";
+        break;
+      case "/experience":
+        document.title = "Experience — Abishek";
+        break;
+      case "/skills":
+        document.title = "Skills — Abishek";
+        break;
+      case "/contact":
+        document.title = "Say Hi — Abishek";
+        break;
+      default:
+        document.title = "Abishek — Full Stack Engineer";
+        break;
+    }
+  }, [location.pathname]);
   return (
     <>
       <GlobalStyle />
